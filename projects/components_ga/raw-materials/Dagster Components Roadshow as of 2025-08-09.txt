@@ -1,0 +1,276 @@
+Dagster Components
+Overview and demo
+
+The challenge - Data & AI teams today
+Siloed Teams
+
+
+
+ML engineers, data engineers, and platform teams often speak different languages while operating in the same platform.
+
+
+Pipeline Chaos
+
+With lack of standards, pipelines can become hard to maintain, and equally hard to understand.
+
+
+Accessibility
+
+Stakeholders and new team members often have to search through unorganized and undocumented projects to understand operations.
+
+
+
+The vision - what if AI and data teams could collaborate on a shared platform using their domain-specific tools of choice (eg. dbt)
+Data scientists
+
+Can onboard new data sets and productionize their analysis with simple YAML files
+Can reuse battle-tested pipelines for training and productionizing models
+Machine learning engineers
+
+Can provide guardrails, add validations, and enable team members
+Platform engineers
+
+
+Introducing Dagster Components
+YAML interfaces and scaffolding - Enable non-technical (or technical) stakeholders to easily build and configure pipelines without being a Dagster expert
+
+Introducing Dagster Components
+Reusable patterns - Build once and re-use everywhere, while enforcing best practices
+
+Introducing Dagster Components
+Built-in guardrails - Enable platform owners to ensure quality and compliance, with guardrails that support AI-native dev workflows
+Constraints that Enable Creativity
+Why YAML matters for AI teams:
+Enforces Best Practices: Can't skip error handling or monitoring
+Enables AI Workflows: LLMs can generate valid pipeline configs
+Reduces Errors: Schema validation catches issues before runtime
+Democratizes Access: Data scientists can modify pipelines without Python expertise
+
+
+Easily share your Components with the Marketplace
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Documentation as-code that is automatically presented through the Dagster UI.
+
+The power of abstraction
+
+Demo
+Walk through taking an existing pipeline and turning it into a Component (?)
+
+—
+
+Show existing project structure
+Explain code base, hypothetical ML engineer with a script that runs a Databricks notebook
+Scaffold a component, explain how we can map attributes from YAML
+dg scaffold component
+dg list components
+dg dev (show documentation)
+dg scaffold defs
+<configure component>
+dg check yaml
+dg check defs
+dg list defs
+<add another component inline>
+dg list defs
+dg dev
+
+—
+
+
+First, create a new component for running Databricks jobs:
+
+    dg scaffold component DatabricksJobComponent
+
+Then, update the component adapting it from our ML engineer's script:
+
+    import os
+
+    import dagster as dg
+
+    DATABRICKS_HOST = os.environ.get("DATABRICKS_HOST")
+    DATABRICKS_TOKEN = os.environ.get("DATABRICKS_TOKEN")
+
+    class DatabricksJobComponent(dg.Component, dg.Model, dg.Resolvable):
+        """Component for running Databricks jobs, and attaching assets"""
+
+        # added fields here will define params when instantiated in Python, and yaml schema via Resolvable
+        job_id: int
+        parameters: dict[str, str]
+        assets: list[dg.ResolvedAssetSpec]
+
+        def build_defs(self, context: dg.ComponentLoadContext) -> dg.Definitions:
+            @dg.multi_asset(name=f"{self.job_id}_assets", specs=self.assets)
+            def _multi_asset(context: dg.AssetExecutionContext) -> dg.AssetExecutionContext:
+                client = WorkspaceClient(host=self.host, token=self.token)
+                client.jobs.run_now_and_wait(
+                    job_id=self.job_id,
+                    job_parameters=self.parameters,
+                )
+
+            return dg.Definitions(assets=[_multi_asset])
+
+Next, scaffold the definition instance for that component:
+
+    dg scaffold defs dagster_demo_runpod.components.databricks_job_component.DatabricksJobComponent colton_dbx_job
+
+
+Next, populate the YAML for your new component:
+
+    type: dagster_demo_runpod.components.databricks_job_component.DatabricksJobComponent
+
+    attributes:
+      job_id: 1000180891217799
+      parameters:
+        source_file_prefix: "s3://acme-analytics/raw"
+        destination_file_prefix: "s3://acme-analytics/reports"
+      assets:
+        - key: colton_dbx_annual_report
+          owners:
+            - colton@dagsterlabs.com
+          kinds:
+            - databricks
+            - csv
+
+Validate
+
+    dg check defs
+
+    dg list defs
+
+Make it downstream of our existing assets...
+
+      deps:
+        - prepared_accounts
+
+And finally, add another definition, copy and paste the YAML inline `---` (COMBINE WITH HIGH QUALITY ERROR MESSAGING)
+
+    type: dagster_demo_runpod.components.databricks_job_component.DatabricksJobComponent
+
+    attributes:
+      job_id: 1000180891217799
+      parameters:
+        source_file_prefix: "s3://acme-analytics/raw"
+        destination_file_prefix: "s3://acme-analytics/reports"
+      assets:
+        - key: colton_dbx_annual_report
+          owners:
+            - colton@dagsterlabs.com
+          kinds:
+            - databricks
+            - csv
+          deps:
+            - prepared_accounts
+
+    ---
+
+    type: dagster_demo_runpod.components.databricks_job_component.DatabricksJobComponent
+
+    attributes:
+      job_id: 123
+      parameters:
+        source_file_prefix: "s3://acme-analytics/raw"
+        destination_file_prefix: "s3://acme-analytics/reports"
+      assets:
+        - key: nick_dbx_annual_report
+          owners:
+            - nick@dagsterlabs.com
+          kinds:
+            - databricks
+            - csv
+          deps:
+            - prepared_accounts
+
+First class support and integration with the UI
+Advantages
+
+Advantages
+Customizable scaffolding
+Dynamically populated YAML
+Generate tool-specific files
+ TODO: e-mail Nick EOD
+
+<screenshots might be necessary (eg. error messaging)>
+
+
+Advantages
+Advanced templating with injectable context
+ TODO: e-mail Nick EOD
+
+<screenshots might be necessary (eg. error messaging)>
+
+
+Advantages
+Easy to understand error messaging with introspectible metadata
+$ dg check yaml
+~/src/dagster_demo/defs/colton_dbx_job/defs.yaml:5 - DatabricksJobComponent 
+     |
+   2 |
+   3 | attributes:
+   4 |   job_id: 1000180891217799
+   5 |   arameters:
+     |   ^ Additional properties are not allowed ('arameters' was unexpected)
+   6 |     source_file_prefix: "s3://acme-analytics/raw"
+   7 |     destination_file_prefix: "s3://acme-analytics/reports"
+   8 |   databricks_host: "{{ env.DATABRICKS_HOST }}"
+     |
+ TODO: e-mail Nick EOD
+
+<screenshots might be necessary (eg. error messaging)>
+
+
+Putting it all together:Awesome DX for your stakeholders
+
+Questions
+
+Summary
+We provided an example of authoring a Component, showcasing how it can enable stakeholders and, promote collaboration.
+
+Demoed how we can take existing pipelines, and make them generalizable.
+
+Showcased an improved developer experience with scaffolding, improved error messages, and tight feedback loops.
+
+
+
+Next steps
+We’re really excited for improved AI tooling to leverage Dagster projects and Components: 
+
+MCP server(s)
+AI scaffolding with context awareness (eg. error logs)
+AI summaries for failures
+
+Expanding the Component marketplace
+
+
+
+Advantages
+A dg command-line tool that allows for an improved local developer experience
+
+An elegant Python framework making it easy to wrap existing pipelines, or for developing new.
+
+Tight integration with the Dagster ecosystem for automatic documentation directly in the UI, and a polished experience for stakeholders.
+
+
+
+
+Introducing Dagster Components
+AI-ready - well thought out structure makes LLM-based developer workflows much more efficient.
