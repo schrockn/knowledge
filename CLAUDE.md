@@ -21,3 +21,14 @@ When working on a specific project:
 
 - `components_ga/` - Dagster Components General Availability project
 - `ai_software_engineering_blog/` - Blog series about using AI in software engineering
+
+## Task Management
+
+The `tasks/` directory contains individual task files for ongoing investigations and work items that don't fit within specific projects. Each task file should:
+
+1. **Clear objective**: Document the goal and scope of the task
+2. **Progress tracking**: Include a progress log with dates and findings
+3. **Next steps**: Maintain a clear list of what needs to be done next
+4. **Research notes**: Capture findings, dead ends, and useful links
+
+Tasks are meant to be lightweight investigations that may eventually graduate into full projects or get completed as standalone work.

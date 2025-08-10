@@ -1,1 +1,0 @@
-Might be too heavyweight but could be compelling
