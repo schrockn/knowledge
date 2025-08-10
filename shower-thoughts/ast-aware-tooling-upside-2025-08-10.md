@@ -1,0 +1,1 @@
+It does tons of grepping in the codebase for tool-based searches. I bet there is a ton of upside in terms of speed and precision to having ast- and type-system-aware tooling

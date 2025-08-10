@@ -1,0 +1,1 @@
+Providing a structured process for complex tasks is very important. E.g. the public decorator thing. It was tasked with adding decorators to hundreds of symbols. It ended up writing its own scripts to do it. It also starts batching operations. However in the end I should have been more prescriptive about the process as it ended up doing stuff that was pretty inefficient.

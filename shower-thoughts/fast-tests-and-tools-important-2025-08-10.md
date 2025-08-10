@@ -1,0 +1,1 @@
+It has never been more important to write fast tests and fast tools

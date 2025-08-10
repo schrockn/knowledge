@@ -1,0 +1,36 @@
+name: Create Shower Thought Document
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  create-shower-thought:
+    if: contains(github.event.issue.title, '[shower-thought]')
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Create shower thought document
+      run: python .github/scripts/create_shower_thought.py
+      env:
+        ISSUE_TITLE: ${{ github.event.issue.title }}
+        ISSUE_BODY: ${{ github.event.issue.body }}
+        ISSUE_NUMBER: ${{ github.event.issue.number }}
+        
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add shower-thoughts/
+        if ! git diff --staged --quiet; then
+          git commit -m "Add shower thought from issue #${{ github.event.issue.number }}"
+          git push
+        fi
