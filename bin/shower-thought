@@ -9,10 +9,19 @@ from datetime import datetime
 def send_shower_thought(thought):
     """Send a shower thought via email to trigger automation."""
     
+    # Parse title and body from input
+    if ':' in thought:
+        title_part, body_part = thought.split(':', 1)
+        title_part = title_part.strip()
+        body_part = body_part.strip()
+    else:
+        title_part = thought.strip()
+        body_part = ''
+    
     # Email configuration
     from_email = "schrockn@gmail.com"
     to_email = "knowledge.2h7610@zapiermail.com"
-    subject = f"Shower Thought - {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    subject = title_part
     
     # Get app password from environment variable
     app_password = os.getenv('GMAIL_APP_PASSWORD')
@@ -21,8 +30,9 @@ def send_shower_thought(thought):
         print("Set it with: export GMAIL_APP_PASSWORD='your-app-password'")
         sys.exit(1)
     
-    # Create message
-    msg = MIMEText(thought)
+    # Create message with body content
+    email_body = body_part if body_part else title_part
+    msg = MIMEText(email_body)
     msg['Subject'] = subject
     msg['From'] = from_email
     msg['To'] = to_email
@@ -33,15 +43,6 @@ def send_shower_thought(thought):
             server.starttls()
             server.login(from_email, app_password)
             server.send_message(msg)
-        
-        # Parse title and body
-        if ':' in thought:
-            title_part, body_part = thought.split(':', 1)
-            title_part = title_part.strip()
-            body_part = body_part.strip()
-        else:
-            title_part = thought.strip()
-            body_part = ''
         
         print(f'✓ Shower thought sent')
         print(f'Title: "{title_part}"')

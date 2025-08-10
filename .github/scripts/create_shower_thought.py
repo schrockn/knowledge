@@ -6,8 +6,9 @@ from datetime import datetime
 
 def sanitize_title(title):
     """Convert issue title to a filename-safe format."""
-    # Remove [shower-thought] prefix
+    # Remove all [shower-thought] tags (there might be multiple)
     title = re.sub(r'\[shower-thought\]\s*', '', title, flags=re.IGNORECASE)
+    title = title.strip()
     
     # Convert to lowercase and replace spaces/special chars with dashes
     title = re.sub(r'[^\w\s-]', '', title.lower())
