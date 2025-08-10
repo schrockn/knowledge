@@ -33,7 +33,7 @@ This keeps ideas organized while maintaining the global low-friction capture mec
 ### Shower Thoughts Automation
 
 Send an email to the repo's GitHub Issues email address. Any email will automatically:
-1. Create a new file in `shower-thoughts/` with date suffix
+1. Create a new file in `base/shower-thoughts/` with date suffix
 2. Use first 50 characters of the thought for the filename
 3. Close the issue with confirmation
 

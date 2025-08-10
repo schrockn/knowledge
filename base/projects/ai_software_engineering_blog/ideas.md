@@ -1,6 +1,6 @@
 # Blog Ideas from Shower Thoughts
 
-Collection of AI software engineering blog post ideas extracted from shower-thoughts/.
+Collection of AI software engineering blog post ideas extracted from base/shower-thoughts/.
 
 - **"It Turns You Into a PM"** - How AI coding assistants fundamentally change the developer role from writing code to managing and directing AI agents
 

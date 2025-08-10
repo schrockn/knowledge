@@ -38,10 +38,10 @@ def main():
     filename = f"{sanitized_title}-{current_date}.md"
     
     # Ensure shower-thoughts directory exists
-    os.makedirs('shower-thoughts', exist_ok=True)
+    os.makedirs('base/shower-thoughts', exist_ok=True)
     
     # Create file path
-    filepath = os.path.join('shower-thoughts', filename)
+    filepath = os.path.join('base/shower-thoughts', filename)
     
     # Check if file already exists, add counter if needed
     counter = 1

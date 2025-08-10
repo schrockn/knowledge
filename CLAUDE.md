@@ -1,6 +1,6 @@
 # Knowledge Repository Guidelines
 
-This repository serves as a comprehensive knowledge management system for both personal and professional work. It is organized into discrete projects under the `projects/` directory, with individual tasks tracked in the `tasks/` directory.
+This repository serves as a comprehensive knowledge management system for both personal and professional work. It is organized into discrete projects under the `base/projects/` directory, with individual tasks tracked in the `base/tasks/` directory.
 
 ## Project Guidelines
 
@@ -19,12 +19,12 @@ When working on a specific project:
 
 ## Current Projects
 
-- `components_ga/` - Dagster Components General Availability project
-- `ai_software_engineering_blog/` - Blog series about using AI in software engineering
+- `base/projects/components_ga/` - Dagster Components General Availability project
+- `base/projects/ai_software_engineering_blog/` - Blog series about using AI in software engineering
 
 ## Task Management
 
-The `tasks/` directory contains individual task files for ongoing investigations and work items (both personal and professional) that don't fit within specific projects. Each task file should:
+The `base/tasks/` directory contains individual task files for ongoing investigations and work items (both personal and professional) that don't fit within specific projects. Each task file should:
 
 1. **Clear objective**: Document the goal and scope of the task
 2. **Progress tracking**: Include a progress log with dates and findings

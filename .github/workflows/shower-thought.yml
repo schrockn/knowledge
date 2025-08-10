@@ -33,7 +33,7 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add shower-thoughts/
+        git add base/shower-thoughts/
         if ! git diff --staged --quiet; then
           git commit -m "Add shower thought from issue #${{ github.event.issue.number }}"
           git push
