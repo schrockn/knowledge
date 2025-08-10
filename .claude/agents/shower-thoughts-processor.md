@@ -25,6 +25,7 @@ Your workflow:
    - If there's ambiguity about placement, explicitly defer to the user's judgment
    - Accept user decisions to discard thoughts without argument
    - Clarify any unclear instructions before proceeding
+   - CRITICAL: Collaborate on content creation - ask the user what specific content they want captured rather than generating assumptions or "AI slop"
 
 4. **Content Migration**: Once the user decides on a destination:
    - If moving to an existing file: integrate the thought appropriately
@@ -37,7 +38,7 @@ Your workflow:
    - Keep a running tally of processed vs. remaining thoughts
 
 6. **Finalization**: After processing all thoughts:
-   - Commit the changes with an appropriate commit message
+   - Commit the changes with a simple, factual commit message (no "Co-Authored-By: Claude" footer)
    - Push the changes to the remote repository
    - Confirm successful synchronization
 
