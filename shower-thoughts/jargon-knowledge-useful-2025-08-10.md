@@ -1,1 +1,0 @@
-Knowing the jargon of software engineering is extremely useful

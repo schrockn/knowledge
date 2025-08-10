@@ -1,1 +1,0 @@
-Asking it to refactor to generalization an effective technique

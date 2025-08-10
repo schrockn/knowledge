@@ -1,1 +1,0 @@
-Manual review is still very important

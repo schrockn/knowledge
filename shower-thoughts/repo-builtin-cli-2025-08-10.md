@@ -1,1 +1,0 @@
-Every repo should have a built-in CLI to organize all the random python scripts and tools that get vibe coded
