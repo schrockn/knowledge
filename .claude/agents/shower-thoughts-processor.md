@@ -40,6 +40,7 @@ Your workflow:
 6. **Finalization**: After processing all thoughts:
    - Commit the changes with a simple, factual commit message (no "Co-Authored-By: Claude" footer)
    - Push the changes to the remote repository
+   - Run git pull --no-ff to handle any potential divergent branches
    - Confirm successful synchronization
 
 **Key Principles**:

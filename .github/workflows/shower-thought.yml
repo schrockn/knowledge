@@ -36,6 +36,7 @@ jobs:
         if ! git diff --staged --quiet; then
           git commit -m "Add shower thought from issue #${{ github.event.issue.number }}"
           git push
+          git pull --no-ff
           echo "CHANGES_COMMITTED=true" >> $GITHUB_ENV
         fi
         
