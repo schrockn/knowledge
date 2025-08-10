@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write
     
     steps:
     - name: Checkout repository
@@ -35,4 +36,12 @@ jobs:
         if ! git diff --staged --quiet; then
           git commit -m "Add shower thought from issue #${{ github.event.issue.number }}"
           git push
+          echo "CHANGES_COMMITTED=true" >> $GITHUB_ENV
         fi
+        
+    - name: Close issue
+      if: env.CHANGES_COMMITTED == 'true'
+      run: |
+        gh issue close ${{ github.event.issue.number }} --comment "Shower thought has been processed and committed. Thank you!"
+      env:
+        GH_TOKEN: ${{ github.token }}

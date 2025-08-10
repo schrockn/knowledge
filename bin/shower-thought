@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+
+import sys
+import smtplib
+import os
+from email.mime.text import MIMEText
+from datetime import datetime
+
+def send_shower_thought(thought):
+    """Send a shower thought via email to trigger automation."""
+    
+    # Email configuration
+    from_email = "schrockn@gmail.com"
+    to_email = "knowledge.2h7610@zapiermail.com"
+    subject = f"Shower Thought - {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    
+    # Get app password from environment variable
+    app_password = os.getenv('GMAIL_APP_PASSWORD')
+    if not app_password:
+        print("✗ Error: GMAIL_APP_PASSWORD environment variable not set")
+        print("Set it with: export GMAIL_APP_PASSWORD='your-app-password'")
+        sys.exit(1)
+    
+    # Create message
+    msg = MIMEText(thought)
+    msg['Subject'] = subject
+    msg['From'] = from_email
+    msg['To'] = to_email
+    
+    try:
+        # Connect to Gmail SMTP
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.starttls()
+            server.login(from_email, app_password)
+            server.send_message(msg)
+        
+        print(f"✓ Shower thought sent: {thought}")
+    except Exception as e:
+        print(f"✗ Failed to send shower thought: {e}")
+        sys.exit(1)
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: shower-thought \"Your thought here\"")
+        sys.exit(1)
+    
+    thought = sys.argv[1]
+    if not thought.strip():
+        print("Error: Empty thought provided")
+        sys.exit(1)
+    
+    send_shower_thought(thought)
+
+if __name__ == "__main__":
+    main()
