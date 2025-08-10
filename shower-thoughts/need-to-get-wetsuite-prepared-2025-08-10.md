@@ -1,0 +1,1 @@
+Also figure out if I can still do open water race given timing
