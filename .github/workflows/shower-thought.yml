@@ -8,6 +8,8 @@ jobs:
   create-shower-thought:
     if: contains(github.event.issue.title, '[shower-thought]')
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
     - name: Checkout repository
