@@ -17,7 +17,18 @@ A comprehensive exploration of how AI is transforming software development, from
 
 - `drafts/` - Blog post drafts and content development
 - `research/` - Research materials on specific topics that may span multiple posts
-- `shower-thoughts/` - Individual files for quick ideas, named with format `idea-description-YYYY-MM-DD.md`
+- `ideas.md` - Consolidated blog post ideas from shower thoughts
+
+### Managing Ideas
+
+The `ideas.md` file contains consolidated blog post ideas extracted from global shower thoughts. When shower thoughts accumulate in the repository root that are relevant to AI software engineering:
+
+1. **Review shower thoughts** - Assess which ones relate to AI/software engineering topics
+2. **Extract to ideas.md** - Add relevant ideas as bullet points with brief descriptions
+3. **Delete processed shower thoughts** - Remove the original files after consolidating to avoid duplication
+4. **Keep non-relevant thoughts** - Leave shower thoughts that aren't AI/engineering related in place
+
+This keeps ideas organized while maintaining the global low-friction capture mechanism for new thoughts.
 
 ### Shower Thoughts Automation
 
