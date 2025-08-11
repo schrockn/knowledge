@@ -1,1 +1,0 @@
-Pete's suggestion to take context store more seriously. Have context packages (e.g. about stripe or something)  [sms]

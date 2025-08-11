@@ -5,7 +5,7 @@ Figure out if I can still do open water race given timing constraints.
 
 ## Tasks
 - [ ] Check race dates and requirements
-- [ ] Assess current schedule and availability
+- [ ] Assess current schedule and availability  
 - [ ] Confirm wetsuit readiness/availability
 - [ ] Make final decision on participation
 

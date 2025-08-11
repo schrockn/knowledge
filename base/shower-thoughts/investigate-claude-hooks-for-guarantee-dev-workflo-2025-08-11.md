@@ -1,1 +1,0 @@
-investigate claude hooks for guarantee dev workflows [sms]
