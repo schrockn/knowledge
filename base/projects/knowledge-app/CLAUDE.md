@@ -16,3 +16,14 @@ A system designed to help organize, search, and manage knowledge effectively acr
 ## Working Notes
 
 This project is in early stages. Materials and implementation details will be added as the project develops.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+new line
+new line
+new line
+new line
+new line
+new line
+new line
+new line
