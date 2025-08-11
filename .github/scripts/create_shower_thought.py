@@ -32,8 +32,21 @@ def main():
         print("No issue title found")
         return
     
-    # Generate filename
-    sanitized_title = sanitize_title(issue_title)
+    # Parse title and body from the email subject (issue title) and email body (issue body)
+    # Email subject format: "Shower Thought - YYYY-MM-DD HH:MM [shower-thought]"
+    # We need to get the actual content from the email body
+    email_content = issue_body.strip() if issue_body else issue_title.replace('[shower-thought]', '').strip()
+    
+    if ':' in email_content:
+        title_part, body_part = email_content.split(':', 1)
+        title_part = title_part.strip()
+        body_part = body_part.strip()
+    else:
+        title_part = email_content
+        body_part = ''
+    
+    # Generate filename from the parsed title
+    sanitized_title = sanitize_title(title_part)
     current_date = datetime.now().strftime('%Y-%m-%d')
     filename = f"{sanitized_title}-{current_date}.md"
     
@@ -51,13 +64,15 @@ def main():
         filepath = f"{name}-{counter}{ext}"
         counter += 1
     
-    # Write the content
-    content = issue_body.strip() if issue_body else issue_title.replace('[shower-thought]', '').strip()
+    # Write the content (use body if available, otherwise title)
+    content = body_part if body_part else title_part
     
     with open(filepath, 'w') as f:
         f.write(content)
     
     print(f"Created shower thought: {filepath}")
+    print(f'Title: "{title_part}"')
+    print(f'Body: "{body_part}"')
 
 if __name__ == '__main__':
     main()
