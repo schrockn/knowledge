@@ -6,11 +6,11 @@ Capture observations and insights about AI chat onboarding experiences across di
 
 ## SMS Onboarding (NUT)
 
-*To be documented: Experience with AI chat onboarding via SMS*
+_To be documented: Experience with AI chat onboarding via SMS_
 
 ## Email Onboarding (NUX)
 
-*To be documented: Experience with AI chat onboarding via email*
+_To be documented: Experience with AI chat onboarding via email_
 
 ## Areas to Explore
 

@@ -38,6 +38,7 @@ dev = [
 
 [project.scripts]
 knowledge = "knowledge.cli:main"
+know = "knowledge.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -1,1 +1,0 @@
-Write down the thoughts about the ai chat nut [sms]

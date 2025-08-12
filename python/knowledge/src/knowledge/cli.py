@@ -16,58 +16,16 @@ def main():
     pass
 
 
-@main.command()
-def todo():
-    """Manage daily todos."""
-    repo_root = find_repo_root()
-    todo_file = repo_root / "DAILY_TODO.md"
-    
-    if not todo_file.exists():
-        click.echo(f"No DAILY_TODO.md found at {todo_file}")
-        return
-    
-    click.echo(f"Opening {todo_file}")
-    # You can add logic here to open in editor or process todos
+# ADD command group
+@main.group()
+def add():
+    """Add new items to the knowledge repository."""
+    pass
 
 
-@main.command()
-@click.argument('name')
-def task(name):
-    """Create a new task file."""
-    repo_root = find_repo_root()
-    tasks_dir = repo_root / "base" / "tasks"
-    tasks_dir.mkdir(parents=True, exist_ok=True)
-    
-    task_file = tasks_dir / f"{name}.md"
-    if task_file.exists():
-        click.echo(f"Task file {task_file} already exists")
-        return
-    
-    task_file.write_text(f"# {name.title()}\n\n")
-    click.echo(f"Created task file: {task_file}")
-
-
-@main.command()
-@click.argument('name')
-def project(name):
-    """Create a new project directory."""
-    repo_root = find_repo_root()
-    projects_dir = repo_root / "base" / "projects"
-    projects_dir.mkdir(parents=True, exist_ok=True)
-    
-    project_dir = projects_dir / name
-    project_dir.mkdir(exist_ok=True)
-    
-    claude_md = project_dir / "CLAUDE.md"
-    if not claude_md.exists():
-        claude_md.write_text(f"# {name.title()} Project\n\n")
-    
-    click.echo(f"Created project directory: {project_dir}")
-
-
-@main.command()
+@add.command('shower-thought')
 @click.argument('thought')
-def shower_thought(thought):
+def add_shower_thought(thought):
     """Add a shower thought to the repository."""
     repo_root = find_repo_root()
     
@@ -112,11 +70,155 @@ def shower_thought(thought):
         click.echo(f'Body: "{body_part}"')
 
 
-@main.command()
-@click.option('--check', is_flag=True, help='Check if files need formatting (exit with non-zero if changes needed)')
-@click.option('--write', is_flag=True, default=True, help='Write changes to files (default: True)')
-def lint(check, write):
-    """Format markdown files using prettier."""
+@add.command('task')
+@click.argument('name')
+def add_task(name):
+    """Create a new task file."""
+    repo_root = find_repo_root()
+    tasks_dir = repo_root / "base" / "tasks"
+    tasks_dir.mkdir(parents=True, exist_ok=True)
+    
+    task_file = tasks_dir / f"{name}.md"
+    if task_file.exists():
+        click.echo(f"Task file {task_file} already exists")
+        return
+    
+    task_file.write_text(f"# {name.title()}\n\n")
+    click.echo(f"Created task file: {task_file}")
+
+
+@add.command('project')
+@click.argument('name')
+def add_project(name):
+    """Create a new project directory."""
+    repo_root = find_repo_root()
+    projects_dir = repo_root / "base" / "projects"
+    projects_dir.mkdir(parents=True, exist_ok=True)
+    
+    project_dir = projects_dir / name
+    project_dir.mkdir(exist_ok=True)
+    
+    claude_md = project_dir / "CLAUDE.md"
+    if not claude_md.exists():
+        claude_md.write_text(f"# {name.title()} Project\n\n")
+    
+    click.echo(f"Created project directory: {project_dir}")
+
+
+@add.command('todo')
+def add_todo():
+    """Manage daily todos."""
+    repo_root = find_repo_root()
+    todo_file = repo_root / "DAILY_TODO.md"
+    
+    if not todo_file.exists():
+        click.echo(f"No DAILY_TODO.md found at {todo_file}")
+        return
+    
+    click.echo(f"Opening {todo_file}")
+    # You can add logic here to open in editor or process todos
+
+
+# LS command group
+@main.group()
+def ls():
+    """List items in the knowledge repository."""
+    pass
+
+
+@ls.command('shower-thought')
+def ls_shower_thought():
+    """List shower thoughts."""
+    repo_root = find_repo_root()
+    shower_thoughts_dir = repo_root / "base" / "shower-thoughts"
+    
+    if not shower_thoughts_dir.exists():
+        click.echo("No shower thoughts directory found")
+        return
+    
+    thoughts = sorted(shower_thoughts_dir.glob("*.md"), key=lambda x: x.stat().st_mtime, reverse=True)
+    if not thoughts:
+        click.echo("No shower thoughts found")
+        return
+    
+    click.echo(f"Found {len(thoughts)} shower thoughts:")
+    for thought in thoughts:
+        click.echo(f"  {thought.name}")
+
+
+@ls.command('task')
+def ls_task():
+    """List task files."""
+    repo_root = find_repo_root()
+    tasks_dir = repo_root / "base" / "tasks"
+    
+    if not tasks_dir.exists():
+        click.echo("No tasks directory found")
+        return
+    
+    tasks = sorted(tasks_dir.glob("*.md"))
+    personal_tasks = sorted((tasks_dir / "personal").glob("*.md")) if (tasks_dir / "personal").exists() else []
+    
+    if not tasks and not personal_tasks:
+        click.echo("No tasks found")
+        return
+    
+    if tasks:
+        click.echo("Tasks:")
+        for task in tasks:
+            click.echo(f"  {task.stem}")
+    
+    if personal_tasks:
+        click.echo("Personal tasks:")
+        for task in personal_tasks:
+            click.echo(f"  personal/{task.stem}")
+
+
+@ls.command('project')
+def ls_project():
+    """List project directories."""
+    repo_root = find_repo_root()
+    projects_dir = repo_root / "base" / "projects"
+    
+    if not projects_dir.exists():
+        click.echo("No projects directory found")
+        return
+    
+    projects = sorted([p for p in projects_dir.iterdir() if p.is_dir()])
+    if not projects:
+        click.echo("No projects found")
+        return
+    
+    click.echo(f"Found {len(projects)} projects:")
+    for project in projects:
+        click.echo(f"  {project.name}")
+
+
+@ls.command('todo')
+def ls_todo():
+    """Show daily todos."""
+    repo_root = find_repo_root()
+    todo_file = repo_root / "DAILY_TODO.md"
+    
+    if not todo_file.exists():
+        click.echo("No DAILY_TODO.md found")
+        return
+    
+    content = todo_file.read_text()
+    click.echo(content)
+
+
+# CHECK command group
+@main.group()
+def check():
+    """Check various aspects of the knowledge repository."""
+    pass
+
+
+@check.command('md')
+@click.option('--fix/--no-fix', default=False, help='Fix formatting issues (default: just check)')
+def check_md(fix):
+    """Check markdown file formatting using prettier."""
     repo_root = find_repo_root()
     
     # Check if pnpm is available
@@ -142,18 +244,15 @@ def lint(check, write):
         click.echo("No markdown files found to format")
         return
     
-    click.echo(f"Found {len(md_files)} markdown files to format")
+    click.echo(f"Found {len(md_files)} markdown files to check")
     
     # Prepare pnpm dlx prettier command
     cmd = ['pnpm', 'dlx', 'prettier']
     
-    if check and not write:
-        cmd.append('--check')
-    elif not check and write:
+    if fix:
         cmd.append('--write')
     else:
-        # Default behavior: write changes
-        cmd.append('--write')
+        cmd.append('--check')
     
     # Add file extensions and files
     cmd.extend(['--parser', 'markdown'])
@@ -168,13 +267,13 @@ def lint(check, write):
             click.echo(result.stderr, err=True)
         
         if result.returncode != 0:
-            if check:
-                click.echo("Some files need formatting. Run 'knowledge lint' to fix them.")
+            if not fix:
+                click.echo("Some files need formatting. Run 'knowledge check md --fix' to fix them.")
             else:
                 click.echo("Prettier encountered an error")
             sys.exit(result.returncode)
         else:
-            if check:
+            if not fix:
                 click.echo("All files are properly formatted")
             else:
                 click.echo("All files have been formatted")

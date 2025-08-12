@@ -69,15 +69,28 @@ When starting a new session, Claude should:
 
 ## Knowledge CLI
 
-A Python CLI tool located at `python/knowledge/` provides commands for managing the repository. Uses uv for Python package management:
+A Python CLI tool located at `python/knowledge/` provides commands for managing the repository. Uses uv for Python package management.
 
-- `knowledge todo` - Manage daily todos
-- `knowledge task <name>` - Create new task files
-- `knowledge project <name>` - Create new project directories
-- `knowledge shower-thought "<thought>"` - Add a shower thought directly to the repository
-- `knowledge lint` - Format all markdown files using prettier
+**Setup**: Run `uv sync` from the repository root to install dependencies, then use `.venv/bin/knowledge` or `.venv/bin/know` to run commands.
 
-**Setup**: Run `uv sync` from the repository root to install dependencies, then use `.venv/bin/knowledge` to run commands.
+### Add Commands
+
+- `knowledge add shower-thought "<thought>"` - Add a shower thought directly to the repository
+- `knowledge add task <name>` - Create new task files
+- `knowledge add project <name>` - Create new project directories
+- `knowledge add todo` - Manage daily todos
+
+### List Commands
+
+- `knowledge ls shower-thought` - List all shower thoughts (newest first)
+- `knowledge ls task` - List all task files
+- `knowledge ls project` - List all project directories
+- `knowledge ls todo` - Show daily todos
+
+### Check Commands
+
+- `knowledge check md` - Check markdown file formatting using prettier
+- `knowledge check md --fix` - Fix markdown file formatting issues
 
 ## Shower Thoughts Processing
 

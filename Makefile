@@ -1,7 +1,7 @@
 .PHONY: format check
 
 format:
-	.venv/bin/knowledge lint
+	.venv/bin/knowledge check md --fix
 
 check:
-	.venv/bin/knowledge lint --check
+	.venv/bin/knowledge check md

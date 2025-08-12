@@ -1,1 +1,0 @@
-This should have a light abstraction that allows the cli to wrap the graphql api in a way that feels like a REST API. Inspiration could be gotten from Sofa. This is a very AI friendly task
