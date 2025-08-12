@@ -1,7 +1,9 @@
 # Modal Sandboxes Research
-*Date: 2025-08-11*
+
+_Date: 2025-08-11_
 
 ## Overview
+
 Research into Modal sandbox capabilities, runtime limits, and practical considerations for building a platform service.
 
 ## Key Findings

@@ -104,7 +104,8 @@ reportMissingTypeStubs = false
 
 ## Step 3: Create Package Files
 
-### src/$PROJECT_NAME/__init__.py
+### src/$PROJECT_NAME/**init**.py
+
 ```python
 """Your project description."""
 
@@ -112,6 +113,7 @@ __version__ = "0.1.0"
 ```
 
 ### src/$PROJECT_NAME/main.py (or cli.py for CLI projects)
+
 ```python
 """Main module for your project."""
 
@@ -129,37 +131,39 @@ if __name__ == "__main__":
 If building a CLI tool, also add dependencies and create a CLI module:
 
 1. Add to pyproject.toml dependencies:
+
    ```toml
    dependencies = [
        "click>=8.0.0",
    ]
-   
+
    [project.scripts]
    $PROJECT_NAME = "$PROJECT_NAME.cli:main"
    ```
 
 2. Create `src/$PROJECT_NAME/cli.py`:
+
    ```python
    """CLI entry point for your project."""
-   
+
    import click
    from pathlib import Path
-   
-   
+
+
    @click.group()
    @click.version_option()
    def main():
        """Your CLI description."""
        pass
-   
-   
+
+
    @main.command()
    @click.argument('name')
    def hello(name):
        """Say hello to NAME."""
        click.echo(f"Hello, {name}!")
-   
-   
+
+
    if __name__ == "__main__":
        main()
    ```
@@ -211,17 +215,20 @@ clean:  ## Clean build artifacts
 ## Step 5: Install and Test
 
 1. Install in development mode:
+
    ```bash
    make dev-install
    ```
 
 2. Test your project:
+
    ```bash
    python -m $PROJECT_NAME.main
    # Or if you created a CLI: $PROJECT_NAME hello World
    ```
 
 3. Run linting and formatting:
+
    ```bash
    make check
    make fix
@@ -248,7 +255,7 @@ Before using this cookbook, define these variables:
 
 ```bash
 export PROJECT_NAME="your_project_name"
-export AUTHOR_NAME="Your Full Name" 
+export AUTHOR_NAME="Your Full Name"
 export AUTHOR_EMAIL="your.email@example.com"
 ```
 

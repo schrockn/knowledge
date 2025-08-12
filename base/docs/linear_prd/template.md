@@ -5,17 +5,20 @@ Linear uses a simple, three-section PRD format that moves from highest level to 
 ## Structure Overview
 
 ### 1. Context (Stable - Should Not Change)
+
 - **Audience**: General - everyone needs to understand this regardless of role
 - **Purpose**: Fundamental motivation for building the feature
 - **Content**: Marketing statement, why now, why we'll win
 
-### 2. Usage Scenarios (Pretty Stable - Minor Refinements Expected)  
+### 2. Usage Scenarios (Pretty Stable - Minor Refinements Expected)
+
 - **Audience**: Product, sales, and marketing teams
 - **Purpose**: Help visualize who we're building for with real-life narratives
 - **Content**: Actual user stories anchored to specific moments in time
 
 ### 3. Milestones (Living Document - Changes Frequently)
-- **Audience**: The team actually working on the feature  
+
+- **Audience**: The team actually working on the feature
 - **Purpose**: Coordination and ship risk management
 - **Content**: Checkpoints, releases, incremental features, build order, risk mitigation
 
@@ -46,35 +49,41 @@ When [specific person] was [doing specific task] at [specific time/context], the
 ### Milestones
 
 **Milestone 1: [Early/Foundation Work]**
+
 - Scope: [What gets built]
 - Purpose: [What this de-risks or enables]
 - Success criteria: [How we know it's done]
 
-**Milestone 2: [Core Functionality]** 
+**Milestone 2: [Core Functionality]**
+
 - Scope: [What gets built]
 - Purpose: [What this de-risks or enables]
 - Success criteria: [How we know it's done]
 
 **Milestone 3: [Polish/Enhancement]**
-- Scope: [What gets built] 
+
+- Scope: [What gets built]
 - Purpose: [What this de-risks or enables]
 - Success criteria: [How we know it's done]
 
 ## Guidelines for Writing
 
 ### Context Section
+
 - Keep it high-level and strategic
 - Make it compelling - this is your elevator pitch
 - Focus on the "why" not the "what" or "how"
 - Should remain stable throughout development
 
-### Usage Scenarios  
+### Usage Scenarios
+
 - Use real people and real situations when possible
 - Be specific about timing and context
 - Show the user's workflow, not just the feature
 - Help readers visualize the user experience
 
 ### Milestones
+
 - Order by risk and dependency, not importance
 - Include what you're learning/de-risking with each milestone
 - Be prepared to adjust scope and number as you build

@@ -4,14 +4,14 @@
 **Download Date:** 2025-08-09  
 **Content Type:** Blog Post  
 **Source Domain:** dagster.io  
-**Reason for Download:** Component descriptions and feature analysis for GA strategy research  
+**Reason for Download:** Component descriptions and feature analysis for GA strategy research
 
 ---
 
 # Dagster 1.11: Build Me Up Buttercup
 
 **Author:** Yuhan Luo  
-**Publication Date:** June 26, 2025  
+**Publication Date:** June 26, 2025
 
 ## Release Highlights
 
@@ -25,6 +25,7 @@
 ## Components (stable): Configurable, Reusable Building Blocks for Data Pipelines
 
 ### Key Features
+
 - Plug-and-play in YAML or Python
 - Rapid pipeline building with minimal boilerplate
 - Ready-made components for:
@@ -36,6 +37,7 @@
   - Power BI
 
 ### Highlights
+
 - Automatic documentation generation
 - Low-code, high-clarity DSL
 - Custom component support
@@ -47,6 +49,7 @@
 ## dg (Stable): All-in-One CLI
 
 ### Capabilities
+
 - Code generation
 - Local development
 - Ad-hoc job execution
@@ -54,6 +57,7 @@
 - Developer experience utilities
 
 ### Features
+
 - `scaffold` for generating definitions
 - `dev` to launch Dagster instance
 - `launch` for job execution
@@ -62,6 +66,7 @@
 ## create-dagster: Project Bootstrapper
 
 ### Benefits
+
 - Standardized Python directory layout
 - Preconfigured local dg CLI setup
 - Workspace scaffolding
@@ -83,6 +88,7 @@
 ## Integrations
 
 ### New and Updated Integrations
+
 - **Fivetran integration (GA)**: Full workspace management capabilities
 - **dbt Cloud (Beta)**: Enhanced integration with dbt Cloud platform
 - **Apache Iceberg (Preview)**: Support for Iceberg table format
@@ -96,18 +102,21 @@ The release highlights contributions from over 100 community members, showcasing
 ## Technical Implementation Notes
 
 ### Components Architecture
+
 - Built with configurability as a core principle
 - Support for both YAML and Python-based definitions
 - Strong typing system for better developer experience
 - Automatic validation and error reporting
 
 ### CLI Improvements
+
 - Unified command structure for better usability
 - Enhanced development workflow support
 - Better integration with existing Python tooling
 - Cross-platform compatibility improvements
 
 ### UI/UX Enhancements
+
 - Streamlined asset selection interface
 - Improved visualization of pipeline health and status
 - Better management of backfill operations

@@ -77,6 +77,7 @@ When ordering by priority, allow drag-and-drop within a priority to determine fi
 #### Mockups & prototypes
 
 **Key interactions designed:**
+
 - Adjust issues within and between priorities
 - Changing priority buckets through selection and drag-and-drop
 

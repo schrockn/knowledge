@@ -32,16 +32,19 @@ This approach enables practitioners who aren't traditional full-stack engineers 
 The rise of medium code has enabled new types of software practitioners:
 
 ### Analytics Engineers
+
 - Bridge the gap between data engineering and analytics
 - Use tools like dbt to transform data using SQL
 - Create production data pipelines without deep infrastructure knowledge
 
 ### Data Scientists
+
 - Move beyond notebooks to production-ready ML systems
 - Use frameworks that abstract deployment complexity
 - Focus on model logic rather than infrastructure
 
 ### Infrastructure Engineers
+
 - Create reusable abstractions for other teams
 - Build platforms that enable medium-code development
 - Reduce cognitive load for domain experts

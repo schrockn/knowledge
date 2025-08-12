@@ -1,10 +1,12 @@
 # Section 2: Usage Scenarios - Detailed Interview Capture
+
 **Interview Date**: August 9, 2025  
 **Stakeholder**: CTO/Founder  
 **Section Status**: COMPLETE - Pending User Validation  
 **Purpose**: Capture all usage scenario details for downstream PRD agent processing
 
 ## Overview
+
 This document contains comprehensive usage scenarios for Dagster Components GA. Each scenario includes deep context about users, their workflows, pain points, and how Components transforms their experience. Maximum detail has been preserved for agent consumption.
 
 ---
@@ -14,31 +16,34 @@ This document contains comprehensive usage scenarios for Dagster Components GA. 
 ### Organizational Context and Dynamics
 
 #### Company Profile (Poolside-Type Organization)
+
 **Industry**: AI/ML Foundation Model Development  
 **Size**: High-growth startup with specialized teams  
 **Technical Maturity**: Cutting-edge ML research with production demands  
-**Key Challenge**: Bridging research productivity with production requirements  
+**Key Challenge**: Bridging research productivity with production requirements
 
 #### Team Structure and Roles
 
 **Data Platform Engineers**:
+
 - **Characterization**: "Extremely talented engineers" (direct quote)
 - **Size**: Small, elite team (typically 3-5 engineers)
-- **Responsibilities**: 
+- **Responsibilities**:
   - Core infrastructure and orchestration
   - Platform reliability and scaling
   - Tool integration and automation
   - Setting organizational standards
 - **Technical Stack**: Deep Dagster expertise, Kubernetes, cloud platforms
-- **Pain Points**: 
+- **Pain Points**:
   - Constantly pulled into researcher support requests
   - Difficulty enforcing standards across research teams
   - Repetitive infrastructure setup for similar workflows
 
 **Research Teams**:
+
 - **Size**: Larger teams (20-50 researchers)
 - **Composition**: Mix of formally trained engineers and domain experts
-- **Technical Tools**: 
+- **Technical Tools**:
   - Heavy Spark usage for distributed computation
   - Jupyter notebooks for experimentation
   - Some teams use dbt for data transformation
@@ -47,6 +52,7 @@ This document contains comprehensive usage scenarios for Dagster Components GA. 
 - **Core Quote**: "Researchers productive in notebooks but don't want to learn Dagster"
 
 **Data Scientists**:
+
 - **Role**: Bridge between research and production
 - **Tools**: Notebooks, Python, SQL, model frameworks
 - **Focus**: Feature engineering, model validation, experimentation
@@ -55,6 +61,7 @@ This document contains comprehensive usage scenarios for Dagster Components GA. 
 ### Current State Pain Points (Pre-Components)
 
 #### Productivity Bottlenecks
+
 1. **Research Velocity Impact**:
    - Researchers blocked waiting for platform team
    - Each production deployment requires platform engineer involvement
@@ -99,11 +106,12 @@ This document contains comprehensive usage scenarios for Dagster Components GA. 
    - Build in policy enforcement mechanisms
 
 3. **Implementation Details**:
+
    ```python
    # Example: Custom Spark Component for Research Team
    class ResearchSparkComponent(Component):
        """Component embedding org-specific Spark patterns"""
-       
+
        # Handles complex concerns:
        # - Cluster provisioning with approved configurations
        # - Data access with proper authentication
@@ -113,13 +121,14 @@ This document contains comprehensive usage scenarios for Dagster Components GA. 
    ```
 
 4. **Configuration Interface Design**:
+
    ```yaml
    # What researchers see - deliberately simple
    type: research.SparkModelTraining
-   
+
    attributes:
      model_name: "gpt_experiment_42"
-     compute_size: "large"  # Whitelisted options: small, medium, large
+     compute_size: "large" # Whitelisted options: small, medium, large
      data_source: "training_corpus_v3"
      experiment_tags: ["nlp", "transformer", "q3_priority"]
    ```
@@ -151,6 +160,7 @@ This document contains comprehensive usage scenarios for Dagster Components GA. 
 **Day-in-the-Life Example**:
 
 **Morning: Starting New Experiment**
+
 1. Opens terminal (no IDE required)
 2. Runs: `dg list components --type research`
 3. Sees available Components with descriptions
@@ -161,6 +171,7 @@ This document contains comprehensive usage scenarios for Dagster Components GA. 
 8. Returns to notebook for analysis
 
 **What Researcher DOESN'T Deal With**:
+
 - Python environment setup
 - Dagster concepts or abstractions
 - Infrastructure provisioning
@@ -170,6 +181,7 @@ This document contains comprehensive usage scenarios for Dagster Components GA. 
 - Deployment complexities
 
 **Afternoon: Checking Results**
+
 1. Uses familiar tools (notebooks, Spark UI)
 2. Sees results in platform UI without learning Dagster
 3. Gets alerts through existing channels (Slack, email)
@@ -180,21 +192,25 @@ This document contains comprehensive usage scenarios for Dagster Components GA. 
 #### Quantifiable Benefits
 
 **Research Velocity**:
+
 - **Before**: 2-3 days to productionize notebook experiment
 - **After**: 30 minutes with Components
 - **Impact**: 10-20x faster iteration cycles
 
 **Platform Team Leverage**:
+
 - **Before**: 1 platform engineer per 5-10 researchers
 - **After**: 1 platform engineer per 30-50 researchers
 - **Impact**: 5x improvement in support ratio
 
 **Policy Compliance**:
+
 - **Before**: 60% compliance with standards (manual enforcement)
 - **After**: 100% compliance (automatic enforcement)
 - **Impact**: Reduced risk, better governance
 
 **Resource Optimization**:
+
 - **Before**: 30% compute waste from improper configurations
 - **After**: <5% waste with whitelisted configurations
 - **Impact**: Significant cost savings at scale
@@ -202,18 +218,21 @@ This document contains comprehensive usage scenarios for Dagster Components GA. 
 #### Strategic Advantages
 
 **Organizational Scalability**:
+
 - Can grow research teams without proportional platform investment
 - Consistent patterns across all teams
 - Reduced onboarding time for new researchers
 - Knowledge captured in Components, not individuals
 
 **Innovation Acceleration**:
+
 - Researchers focus on model innovation
 - Platform team focuses on infrastructure innovation
 - Clear separation of concerns
 - Faster time-to-market for new models
 
 **Competitive Differentiation**:
+
 - Better researcher productivity than competitors
 - More reliable production deployments
 - Superior governance and compliance
@@ -224,6 +243,7 @@ This document contains comprehensive usage scenarios for Dagster Components GA. 
 #### Component Implementation Details
 
 **Custom Policy Enforcement Example**:
+
 ```python
 class ResearchSparkComponent(Component):
     @validator
@@ -236,13 +256,14 @@ class ResearchSparkComponent(Component):
         }
         if config.compute_size not in allowed_sizes:
             raise ValidationError(f"Must use approved size: {allowed_sizes.keys()}")
-        
+
         # Automatic cost attribution
-        self.add_tags({"cost_center": config.team, 
+        self.add_tags({"cost_center": config.team,
                       "max_hourly_cost": allowed_sizes[config.compute_size]["max_cost"]})
 ```
 
 **Observability Integration Example**:
+
 ```python
 def setup_observability(self, context):
     """Automatic observability configuration"""
@@ -253,14 +274,14 @@ def setup_observability(self, context):
         "model_type": self.config.model_type,
         "environment": "production"
     })
-    
+
     # Custom metrics
     context.metrics.register({
         "model_training_time": Timer(),
         "data_processed_gb": Counter(),
         "model_accuracy": Gauge()
     })
-    
+
     # Automatic alerting
     context.alerts.configure({
         "long_running": {"threshold": "6h", "notify": self.config.team_slack},
@@ -272,6 +293,7 @@ def setup_observability(self, context):
 #### YAML Configuration Schema
 
 **Full Research Component Configuration**:
+
 ```yaml
 type: research.SparkModelTraining
 
@@ -280,14 +302,14 @@ attributes:
   model_name: "transformer_v3_experiment"
   team: "nlp_research"
   compute_size: "large"
-  
+
   # Data configuration
   data:
     source: "s3://company-data/training/2024_q3"
     preprocessing: "standard_nlp_pipeline"
     validation_split: 0.2
-    
-  # Model configuration  
+
+  # Model configuration
   model:
     architecture: "transformer"
     parameters:
@@ -295,19 +317,19 @@ attributes:
       hidden_size: 1024
       attention_heads: 16
     checkpoint: "s3://models/checkpoints/base_model_v2"
-    
+
   # Experiment tracking
   experiment:
     tags: ["production", "q3_objective", "nlp"]
     metrics_to_track: ["loss", "accuracy", "f1_score"]
     comparison_baseline: "transformer_v2_production"
-    
+
   # Resource governance
   resources:
     max_runtime_hours: 8
     max_cost_usd: 1000
     priority: "high"
-    
+
   # Monitoring and alerting
   notifications:
     slack_channel: "#nlp-experiments"
@@ -318,7 +340,9 @@ attributes:
 ### Key Design Principles
 
 #### "As Simple as Possible but No Simpler"
+
 **Application in This Scenario**:
+
 - Researchers see only what they need (model config, data source)
 - Platform complexity completely hidden
 - But can access advanced features when needed
@@ -327,12 +351,14 @@ attributes:
 **Quote Context**: "Completely context-dependent" - each organization designs Components for their specific needs
 
 #### Progressive Disclosure
+
 - Basic usage requires minimal configuration
 - Advanced features available through optional sections
 - Escape hatches for power users
 - Documentation increases with complexity
 
 #### Policy as Code
+
 - Governance embedded in Component implementation
 - No manual review needed
 - Automatic compliance checking
@@ -347,6 +373,7 @@ attributes:
 #### The Analytics Engineer Persona
 
 **Professional Background**:
+
 - 3-5 years experience with dbt and SQL
 - Deep understanding of data modeling and warehousing
 - Familiar with git, YAML, and basic development workflows
@@ -354,6 +381,7 @@ attributes:
 - Strong business domain knowledge
 
 **Current Tool Expertise**:
+
 - **dbt Mastery**: Complex macros, tests, documentation
 - **SQL Excellence**: Window functions, CTEs, optimization
 - **Data Warehouse**: Snowflake/BigQuery/Redshift expert
@@ -361,6 +389,7 @@ attributes:
 - **BI Tools**: Looker/Tableau for visualization
 
 **Knowledge Gaps**:
+
 - **Not a Dagster expert**: Doesn't understand assets, ops, resources
 - **Limited Python**: Can't comfortable write Python orchestration code
 - **No Infrastructure Experience**: Doesn't understand deployment, scaling
@@ -373,24 +402,28 @@ attributes:
 #### Why dbt Projects Need Dagster Platform
 
 **Universal Lineage Requirements**:
+
 - See dbt models in context of entire data pipeline
 - Understand upstream data dependencies
 - Track downstream consumer impacts
 - Enable impact analysis for changes
 
 **Operational Excellence Needs**:
+
 - Centralized monitoring and alerting
 - Consistent SLA management
 - Unified incident response
 - Cost attribution and optimization
 
 **Team Collaboration Drivers**:
+
 - Other teams need to understand dbt outputs
 - Enable self-service data discovery
 - Reduce tribal knowledge dependencies
 - Standardize documentation and metadata
 
 **Platform Capabilities Access**:
+
 - Leverage existing observability tools
 - Use centralized secrets management
 - Apply organizational governance policies
@@ -401,6 +434,7 @@ attributes:
 #### The 50-Line Python Problem
 
 **Actual Code Complexity Example**:
+
 ```python
 # What analytics engineers must write today (simplified)
 from dagster import asset, AssetIn, Config, Definitions
@@ -410,7 +444,7 @@ class CustomDbtTranslator(DagsterDbtTranslator):
     def get_asset_key(self, dbt_resource_props):
         # Complex key mapping logic
         return AssetKey([self.project_name, dbt_resource_props["name"]])
-    
+
     def get_deps(self, dbt_resource_props):
         # Dependency resolution logic
         deps = []
@@ -432,6 +466,7 @@ def my_dbt_assets(context, dbt_cli_resource):
 ```
 
 **Why This Is Problematic**:
+
 1. **Abstract Concepts**: AssetKey, AssetIn, Definitions unclear
 2. **Python Environment**: Virtual environments, dependencies, versions
 3. **Error Prone**: Easy to misconfigure dependencies
@@ -443,6 +478,7 @@ def my_dbt_assets(context, dbt_cli_resource):
 #### Environment Setup Complexity
 
 **Current Requirements**:
+
 1. Install Python (correct version)
 2. Create virtual environment
 3. Install Dagster and dependencies
@@ -455,6 +491,7 @@ def my_dbt_assets(context, dbt_cli_resource):
 #### Maintenance and Evolution
 
 **Ongoing Challenges**:
+
 - Dagster version upgrades break code
 - dbt version compatibility issues
 - Dependency resolution conflicts
@@ -466,16 +503,18 @@ def my_dbt_assets(context, dbt_cli_resource):
 #### The Three-Line Solution
 
 **Actual YAML Configuration**:
+
 ```yaml
 type: dagster_dbt.DbtProjectComponent
 
 attributes:
-  project: '{{ project_root }}/transform/dbt'
+  project: "{{ project_root }}/transform/dbt"
   translation:
     key: "analytics/{{ node.name }}"
 ```
 
 **What This Replaces**:
+
 - 50+ lines of Python code
 - Complex abstraction understanding
 - Python environment setup
@@ -484,17 +523,18 @@ attributes:
 #### Complete Configuration with Dependencies
 
 **Real-World Example with Upstream Dependencies**:
+
 ```yaml
 type: dagster_dbt.DbtProjectComponent
 
 attributes:
   # Core project configuration
-  project: '{{ project_root }}/analytics/dbt_transformations'
-  
+  project: "{{ project_root }}/analytics/dbt_transformations"
+
   # Asset key translation for organization
   translation:
     key: "analytics/{{ node.database }}/{{ node.schema }}/{{ node.name }}"
-    
+
   # Upstream dependencies from other teams
   dependencies:
     # Data Engineering team's raw data ingestion
@@ -502,27 +542,27 @@ attributes:
       mapping:
         customer_data: "raw.customers"
         transaction_data: "raw.transactions"
-    
-    # ML team's feature store outputs  
+
+    # ML team's feature store outputs
     - source: ml_team.FeatureStore
       mapping:
         customer_features: "features.customer_360"
-        
+
   # Scheduling and partitioning
   schedule:
-    cron: "0 6 * * *"  # Daily at 6 AM
+    cron: "0 6 * * *" # Daily at 6 AM
     timezone: "America/New_York"
-    
+
   # Resource configuration
   compute:
     warehouse_size: "MEDIUM"
     query_tag: "analytics_team_transforms"
-    
+
   # Monitoring and alerting
   monitoring:
     slack_channel: "#analytics-alerts"
     sla_minutes: 120
-    
+
   # dbt-specific configuration
   dbt:
     target: "production"
@@ -535,6 +575,7 @@ attributes:
 #### Integration Workflow Steps
 
 **Step 1: Discovery**
+
 ```bash
 # Analytics engineer explores available components
 $ dg list components --filter dbt
@@ -546,6 +587,7 @@ Available Components:
 ```
 
 **Step 2: Scaffolding**
+
 ```bash
 # Generate initial configuration
 $ dg scaffold dagster_dbt.DbtProjectComponent \
@@ -557,12 +599,14 @@ Created: Example configuration with common patterns
 ```
 
 **Step 3: Configuration**
+
 - Edit YAML file in any text editor
 - No IDE or Python environment needed
 - Validation through `dg validate`
 - Documentation available in web UI
 
 **Step 4: Testing**
+
 ```bash
 # Validate configuration
 $ dg validate analytics_transforms_component.yaml
@@ -577,6 +621,7 @@ $ dg test analytics_transforms_component.yaml --models customer_ltv
 ```
 
 **Step 5: Deployment**
+
 ```bash
 # Deploy to Dagster platform
 $ dg deploy analytics_transforms_component.yaml
@@ -595,19 +640,21 @@ View in UI: https://dagster.company.com/analytics_transforms
 **Challenge Quote**: "They have to ensure that they are correctly pointing to upstream dependencies"
 
 **Manual Configuration Approach**:
+
 ```yaml
 dependencies:
   # Explicit mapping when naming doesn't match
   - source: data_eng.CustomerDataIngestion
     mapping:
-      output_table: "raw_customers"  # Maps to dbt source
-      
+      output_table: "raw_customers" # Maps to dbt source
+
   # Pattern matching for consistent naming
   - source: data_eng.TransactionIngestion
-    pattern: "raw_{{ asset_name }}"  # Automatic mapping
+    pattern: "raw_{{ asset_name }}" # Automatic mapping
 ```
 
 **Automatic Discovery** (when naming conventions align):
+
 ```yaml
 dependencies:
   # If naming conventions match, can be automatic
@@ -622,6 +669,7 @@ dependencies:
 #### Downstream Dependencies
 
 **Configuration for Consumers**:
+
 ```yaml
 # ML team consuming analytics outputs
 type: ml.ModelTrainingComponent
@@ -641,21 +689,25 @@ attributes:
 #### Quantifiable Improvements
 
 **Setup Time Reduction**:
+
 - **Before**: 2-3 days (Python env, learning Dagster, writing code)
 - **After**: 30 minutes (write YAML, validate, deploy)
 - **Impact**: 50x faster onboarding
 
 **Maintenance Effort**:
+
 - **Before**: 4-8 hours per month maintaining Python code
 - **After**: Near zero (Components maintained by platform team)
 - **Impact**: 50+ hours saved annually per project
 
 **Error Reduction**:
+
 - **Before**: Common dependency misconfigurations, Python errors
 - **After**: Validation catches issues before deployment
 - **Impact**: 90% reduction in configuration errors
 
 **Learning Curve**:
+
 - **Before**: Weeks to understand Dagster concepts
 - **After**: Hours to understand YAML configuration
 - **Impact**: 10x faster proficiency
@@ -663,18 +715,21 @@ attributes:
 #### Strategic Benefits
 
 **Team Autonomy**:
+
 - Analytics engineers self-sufficient
 - No platform team bottleneck
 - Faster iteration on transformations
 - Reduced cross-team dependencies
 
 **Standardization**:
+
 - Consistent integration patterns
 - Uniform monitoring and alerting
 - Standard dependency management
 - Common operational procedures
 
 **Scalability**:
+
 - Easy to onboard new dbt projects
 - Pattern reusable across teams
 - Platform team leverage increases
@@ -685,10 +740,11 @@ attributes:
 #### Component Internals (Hidden from Users)
 
 **What the Component Handles**:
+
 ```python
 class DbtProjectComponent(Component):
     """Encapsulates all dbt integration complexity"""
-    
+
     def build_assets(self):
         # Handles manifest parsing
         # Creates asset definitions
@@ -703,42 +759,45 @@ class DbtProjectComponent(Component):
 #### Progressive Complexity Options
 
 **Minimal Configuration** (Getting Started):
+
 ```yaml
 type: dagster_dbt.DbtProjectComponent
 attributes:
-  project: './dbt'
+  project: "./dbt"
 ```
 
 **Standard Configuration** (Production Ready):
+
 ```yaml
 type: dagster_dbt.DbtProjectComponent
 attributes:
-  project: './dbt'
+  project: "./dbt"
   schedule: "0 6 * * *"
   monitoring:
     slack_channel: "#alerts"
 ```
 
 **Advanced Configuration** (Full Control):
+
 ```yaml
 type: dagster_dbt.DbtProjectComponent
 attributes:
-  project: './dbt'
+  project: "./dbt"
   # [Previous config plus...]
-  
+
   # Advanced dbt control
   dbt:
     exclude_models: ["staging_*", "deprecated_*"]
-    full_refresh_schedule: "0 0 * * 0"  # Weekly
+    full_refresh_schedule: "0 0 * * 0" # Weekly
     test_severity: "error"
     docs_generate: true
-    
+
   # Advanced Dagster features
   assets:
     group_name: "analytics"
     compute_kind: "dbt"
     owners: ["analytics-team@company.com"]
-    
+
   # Custom resource configuration
   resources:
     custom_resource:
@@ -749,9 +808,11 @@ attributes:
 ### Success Metrics and Validation
 
 #### Key Success Metric
+
 **Quote**: "Transform 50 lines of complex Python + environment setup into few lines of YAML configuration"
 
 #### Validation Criteria
+
 1. **Simplicity**: YAML readable by SQL developers
 2. **Completeness**: All dbt features accessible
 3. **Integration**: Full platform capabilities available
@@ -767,6 +828,7 @@ attributes:
 #### Platform Team Composition
 
 **Team Structure**:
+
 - **Size**: 5-10 senior engineers
 - **Background**: Mixed infrastructure and data engineering
 - **Responsibilities**:
@@ -777,6 +839,7 @@ attributes:
   - Manage platform evolution
 
 **Technical Expertise**:
+
 - Deep Dagster knowledge
 - Cloud infrastructure (AWS/GCP/Azure)
 - Security and compliance
@@ -786,23 +849,22 @@ attributes:
 #### Domain Teams Landscape
 
 **Data Teams Supported**:
+
 1. **Analytics Teams** (10-20 people)
    - Using dbt, SQL, BI tools
    - Need production orchestration
-   
 2. **Data Science Teams** (5-15 people)
    - Using notebooks, Python, R
    - Need experiment tracking and deployment
-   
 3. **ML Engineering Teams** (5-10 people)
    - Using TensorFlow, PyTorch
    - Need training pipelines and serving
-   
 4. **Data Engineering Teams** (10-15 people)
    - Using Spark, Airflow, various tools
    - Need migration path to Dagster
 
 **Scale Challenge**:
+
 - 50+ domain team members
 - 100+ pipelines to manage
 - 1000+ daily job runs
@@ -813,6 +875,7 @@ attributes:
 #### Package-Based Distribution System
 
 **Architecture Overview**:
+
 ```
 Platform Team → Component Packages → Internal Registry → Domain Teams
                         ↓                    ↓              ↓
@@ -820,6 +883,7 @@ Platform Team → Component Packages → Internal Registry → Domain Teams
 ```
 
 **Package Structure Example**:
+
 ```
 company-components/
 ├── setup.py
@@ -847,16 +911,17 @@ company-components/
 #### Discovery Mechanism
 
 **Command-Line Discovery**:
+
 ```bash
 # List all available components
 $ dg list components
 
 company_components.EnforcedDbtComponent
   Dbt integration with company policies
-  
+
 company_components.NotebookRunnerComponent
   Production notebook execution with monitoring
-  
+
 company_components.ModelTrainingComponent
   ML model training with experiment tracking
 ```
@@ -864,6 +929,7 @@ company_components.ModelTrainingComponent
 **Quote**: "dg tools allow the introspection of those installed packages to list them"
 
 **Web UI Discovery**:
+
 - Searchable component catalog
 - Rich documentation with examples
 - Version history and changelog
@@ -878,31 +944,33 @@ company_components.ModelTrainingComponent
 **Metadata Enforcement Implementation**:
 
 **The Component**:
+
 ```python
 class EnforcedDbtComponent(DbtProjectComponent):
     """dbt Component with organizational policies"""
-    
+
     def validate_metadata(self, manifest):
         """Enforce organizational metadata standards"""
         for model in manifest.models:
             # Enforce ownership
             if not model.meta.get("owner"):
                 raise ValidationError(f"Model {model.name} missing owner")
-            
+
             # Enforce documentation
             if not model.description:
                 raise ValidationError(f"Model {model.name} missing description")
-            
+
             # Enforce data classification
             if not model.meta.get("data_classification"):
                 raise ValidationError(f"Model {model.name} missing classification")
-            
+
             # Enforce SLA definition
             if model.meta.get("tier") == "critical" and not model.meta.get("sla"):
                 raise ValidationError(f"Critical model {model.name} missing SLA")
 ```
 
 **What Domain Teams See**:
+
 ```yaml
 type: company_components.EnforcedDbtComponent
 
@@ -915,6 +983,7 @@ attributes:
 **Quote**: "Every model has an owner" - automatic policy compliance
 
 **Standards Cascade Example**:
+
 - Owner metadata → Alert routing
 - Classification → Access control
 - SLA definition → Monitoring thresholds
@@ -925,19 +994,20 @@ attributes:
 **Complex Infrastructure Abstraction**:
 
 **The Component**:
+
 ```python
 class NotebookRunnerComponent(Component):
     """Production notebook execution with enterprise features"""
-    
+
     def setup_runtime(self, config):
         """Handle all runtime complexity"""
-        
+
         # Observability Integration
         self.setup_datadog(
             tags=config.tags,
             custom_metrics=config.metrics
         )
-        
+
         # Context Management
         runtime_context = {
             "experiment_id": generate_experiment_id(),
@@ -945,35 +1015,36 @@ class NotebookRunnerComponent(Component):
             "environment": config.environment,
             "user_params": config.parameters
         }
-        
+
         # Compute Configuration
         compute_spec = self.whitelist_compute(config.compute_size)
-        
+
         # Authentication
         self.setup_auth(
             aws_role=config.aws_role,
             database_creds=config.database,
             api_keys=config.external_apis
         )
-        
+
         return runtime_context, compute_spec
 ```
 
 **Configuration for Data Scientists**:
+
 ```yaml
 type: company_components.NotebookRunnerComponent
 
 attributes:
   notebook: "experiments/customer_segmentation.ipynb"
-  
+
   # Simple compute selection from whitelist
-  compute_size: "gpu_medium"  # Pre-approved configurations only
-  
+  compute_size: "gpu_medium" # Pre-approved configurations only
+
   # Automatic observability
   monitoring:
     alert_on_failure: true
     track_metrics: ["runtime", "memory_usage", "gpu_utilization"]
-    
+
   # Managed authentication
   resources:
     s3_bucket: "company-ml-data"
@@ -1012,6 +1083,7 @@ attributes:
 #### Component Authoring Workflow
 
 **Step 1: Identify Pattern**
+
 ```python
 # Platform team notices repeated pattern
 # Example: 10 teams writing similar notebook orchestration code
@@ -1019,6 +1091,7 @@ attributes:
 ```
 
 **Step 2: Design Component**
+
 ```python
 # Extract common patterns
 # Design YAML interface
@@ -1027,6 +1100,7 @@ attributes:
 ```
 
 **Step 3: Package and Publish**
+
 ```bash
 # Build package
 $ python -m build
@@ -1040,6 +1114,7 @@ $ dg docs publish
 ```
 
 **Step 4: Announce and Train**
+
 - Slack announcement with examples
 - Documentation in wiki
 - Office hours for questions
@@ -1050,6 +1125,7 @@ $ dg docs publish
 **Complete Workflow Example**:
 
 **Discovery Phase**:
+
 ```bash
 # Domain user explores available components
 $ dg list components
@@ -1057,10 +1133,10 @@ $ dg list components
 Available Components:
   company_components.EnforcedDbtComponent
     dbt with organizational policies
-    
+
   company_components.NotebookRunnerComponent
     Production notebook execution
-    
+
   company_components.ModelTrainingComponent
     ML training with experiment tracking
 
@@ -1069,20 +1145,21 @@ $ dg describe company_components.NotebookRunnerComponent
 
 NotebookRunnerComponent:
   Purpose: Run Jupyter notebooks in production with monitoring
-  
+
   Required Configuration:
     - notebook: Path to notebook file
     - compute_size: One of [small, medium, large, gpu_medium, gpu_large]
-    
+
   Optional Configuration:
     - schedule: Cron expression
     - monitoring: Alerting configuration
     - resources: External resource access
-    
+
   Examples available at: docs/notebook_runner_examples.yaml
 ```
 
 **Scaffolding Phase**:
+
 ```bash
 # Generate initial configuration
 $ dg scaffold company_components.NotebookRunnerComponent \
@@ -1093,6 +1170,7 @@ Template configuration with common patterns included
 ```
 
 **Configuration Phase**:
+
 ```yaml
 # Domain user edits ml_pipeline.yaml
 type: company_components.NotebookRunnerComponent
@@ -1100,21 +1178,22 @@ type: company_components.NotebookRunnerComponent
 attributes:
   notebook: "models/churn_prediction.ipynb"
   compute_size: "gpu_medium"
-  
+
   schedule:
     cron: "0 2 * * *"
     timezone: "UTC"
-    
+
   parameters:
     model_version: "v2.3"
     training_date: "{{ data_interval_start }}"
-    
+
   monitoring:
     slack_channel: "#ml-alerts"
     email_on_failure: "ml-team@company.com"
 ```
 
 **Deployment Phase**:
+
 ```bash
 # Validate configuration
 $ dg validate ml_pipeline.yaml
@@ -1132,7 +1211,8 @@ $ dg deploy ml_pipeline.yaml
 View in UI: https://dagster.company.com/ml_pipeline
 ```
 
-**Quote Summary**: 
+**Quote Summary**:
+
 ```
 Platform Team → Authors Component Package → Publishes with Documentation
            ↓
@@ -1146,12 +1226,14 @@ Domain User → Configures YAML → System Enforces Policies Automatically
 #### Standardization Without Centralization
 
 **Traditional Approach Problems**:
+
 - Central platform team bottleneck
 - Every request needs custom work
 - Inconsistent implementations
 - Slow delivery times
 
 **Components Approach Benefits**:
+
 - Self-service for domain teams
 - Consistent patterns everywhere
 - Platform team builds once, used many times
@@ -1162,6 +1244,7 @@ Domain User → Configures YAML → System Enforces Policies Automatically
 #### Control with Flexibility
 
 **Platform Team Maintains**:
+
 - Security policies
 - Resource limits
 - Cost controls
@@ -1169,6 +1252,7 @@ Domain User → Configures YAML → System Enforces Policies Automatically
 - Performance standards
 
 **Domain Teams Get**:
+
 - Configuration flexibility
 - Self-service deployment
 - Rapid iteration
@@ -1179,12 +1263,14 @@ Domain User → Configures YAML → System Enforces Policies Automatically
 #### Policy as Code
 
 **Traditional Policy Enforcement**:
+
 - Manual reviews
 - Checklist processes
 - Audit after the fact
 - Inconsistent application
 
 **Components Policy Enforcement**:
+
 - Automatic validation
 - Build-time checks
 - Consistent application
@@ -1195,6 +1281,7 @@ Domain User → Configures YAML → System Enforces Policies Automatically
 #### Scaling Through Reuse
 
 **Multiplication Effect**:
+
 - One Component serves many teams
 - Improvements benefit everyone
 - Bug fixes apply universally
@@ -1207,12 +1294,13 @@ Domain User → Configures YAML → System Enforces Policies Automatically
 #### Component Versioning and Evolution
 
 **Version Management Strategy**:
+
 ```python
 # Component with version compatibility
 class NotebookRunnerComponent(Component):
     version = "2.1.0"
     compatible_versions = ["2.0.0", "2.1.0"]
-    
+
     def migrate_config(self, old_config, old_version):
         """Automatic configuration migration"""
         if old_version < "2.0.0":
@@ -1224,6 +1312,7 @@ class NotebookRunnerComponent(Component):
 #### Component Composition
 
 **Building Complex Workflows**:
+
 ```yaml
 # Combining multiple components
 type: company_components.MLPipelineComponent
@@ -1234,16 +1323,16 @@ attributes:
     - type: company_components.DataValidationComponent
       config:
         rules: "ml_data_quality_rules.yaml"
-        
+
     - type: company_components.NotebookRunnerComponent
       config:
         notebook: "feature_engineering.ipynb"
-        
+
     - type: company_components.ModelTrainingComponent
       config:
         algorithm: "xgboost"
         hyperparameters: "hparam_search.yaml"
-        
+
     - type: company_components.ModelValidationComponent
       config:
         tests: "model_test_suite.yaml"
@@ -1252,6 +1341,7 @@ attributes:
 #### Platform Integration Points
 
 **Centralized Services Integration**:
+
 - Secret management (Vault, AWS Secrets Manager)
 - Monitoring (DataDog, Prometheus, Grafana)
 - Logging (ELK stack, Splunk)
@@ -1264,12 +1354,14 @@ attributes:
 #### Platform Team Metrics
 
 **Development Velocity**:
+
 - Components created per quarter
 - Reuse rate across teams
 - Time to create new Component
 - Component adoption rate
 
 **Operational Excellence**:
+
 - Policy compliance rate: 100% (automatic)
 - Incident reduction: 50% fewer pipeline failures
 - Support ticket reduction: 70% fewer platform requests
@@ -1278,12 +1370,14 @@ attributes:
 #### Domain Team Metrics
 
 **Productivity Gains**:
+
 - Time to production: 10x faster
 - Self-service rate: 90% of deployments
 - Configuration errors: 95% reduction
 - Learning curve: Days instead of weeks
 
 **Satisfaction Metrics**:
+
 - Developer NPS score improvement
 - Reduced friction feedback
 - Increased deployment frequency
@@ -1294,29 +1388,32 @@ attributes:
 #### Enterprise Requirements Addressed
 
 **Security Controls**:
+
 ```python
 class SecureComponent(Component):
     def validate_security(self):
         # Encryption at rest
         self.enforce_encryption()
-        
+
         # Network isolation
         self.configure_vpc_endpoints()
-        
+
         # Access logging
         self.enable_audit_logging()
-        
+
         # Credential rotation
         self.setup_rotation_schedule()
 ```
 
 **Compliance Automation**:
+
 - GDPR data handling rules
 - HIPAA compliance for healthcare
 - SOC2 audit trail requirements
 - PCI DSS for payment data
 
 **Cost Controls**:
+
 - Budget limits per team
 - Resource tagging for attribution
 - Automatic shutdown of idle resources
@@ -1329,28 +1426,36 @@ class SecureComponent(Component):
 ### Common Success Factors
 
 #### Division of Labor Excellence
+
 All three scenarios demonstrate clear separation:
+
 - Platform complexity hidden from domain users
 - Domain expertise preserved and enhanced
 - Each group focuses on their strengths
 - Collaboration through configuration, not code
 
 #### YAML as Universal Interface
+
 Consistent across all scenarios:
+
 - Approachable for non-Python developers
 - Rich enough for complex configuration
 - Validated for correctness
 - Self-documenting structure
 
 #### Progressive Disclosure Pattern
+
 Every scenario shows progression:
+
 - Simple start with minimal config
 - Additional options as needed
 - Escape hatches for power users
 - Complexity revealed gradually
 
 #### Policy Enforcement Automation
+
 Governance without friction:
+
 - Rules embedded in Components
 - Automatic validation and enforcement
 - Consistent application across teams
@@ -1360,7 +1465,7 @@ Governance without friction:
 
 For each scenario to work completely:
 
-1. **End-to-End Workflows**: 
+1. **End-to-End Workflows**:
    - All tooling must be complete (`dg` commands)
    - Documentation must be comprehensive
    - Examples must cover common patterns
@@ -1401,10 +1506,11 @@ Based on these scenarios, key milestone questions:
 Section 2 has established three comprehensive usage scenarios:
 
 1. **Foundation Model Company**: Platform engineers enabling researchers through custom Components
-2. **Analytics Engineer**: Self-service dbt integration without Python complexity  
+2. **Analytics Engineer**: Self-service dbt integration without Python complexity
 3. **Platform Team**: Scaling support through reusable Component packages
 
 Each scenario demonstrates:
+
 - Clear user value proposition
 - Specific workflow transformations
 - Quantifiable improvements
@@ -1415,4 +1521,4 @@ These scenarios provide concrete context for Section 3's milestone planning, sho
 
 ---
 
-*Note for downstream agents: This document contains exhaustive detail from the interview about usage scenarios. All quotes are verbatim. Technical examples are actual configurations discussed. Use this as the authoritative source for Usage Scenarios section of the PRD.*
+_Note for downstream agents: This document contains exhaustive detail from the interview about usage scenarios. All quotes are verbatim. Technical examples are actual configurations discussed. Use this as the authoritative source for Usage Scenarios section of the PRD._

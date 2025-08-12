@@ -9,7 +9,7 @@ A system designed to help organize, search, and manage knowledge effectively acr
 ## Key Objectives
 
 - Efficient knowledge capture and storage
-- Intuitive search and retrieval capabilities  
+- Intuitive search and retrieval capabilities
 - Flexible organization structures
 - Seamless integration with existing workflows
 

@@ -1,9 +1,10 @@
 # Read-Only IDE for Agentic Development
-*Date: 2025-08-10*
+
+_Date: 2025-08-10_
 
 ## Core Insight
 
-The terminal or chat-based agentic UI for authoring software is transformative and opens an "empty" space for a new tool that sits somewhere between a terminal and an IDE. The key realization is that the terminal or chat should be *the* way to edit files, but there should be a complementary visual component that serves as context and oversight.
+The terminal or chat-based agentic UI for authoring software is transformative and opens an "empty" space for a new tool that sits somewhere between a terminal and an IDE. The key realization is that the terminal or chat should be _the_ way to edit files, but there should be a complementary visual component that serves as context and oversight.
 
 ## The Read-Only IDE Concept
 

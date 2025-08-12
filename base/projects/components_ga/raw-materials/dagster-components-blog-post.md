@@ -4,13 +4,13 @@
 **Download Date:** August 9, 2025  
 **Content Type:** Blog Post  
 **Source Domain:** dagster.io  
-**Reason for Download:** Research material for Dagster Components GA strategy and messaging  
+**Reason for Download:** Research material for Dagster Components GA strategy and messaging
 
 ---
 
 **Author:** Pedram Navid  
 **Publication Date:** May 2, 2025  
-**Reading Time:** 2 min  
+**Reading Time:** 2 min
 
 ## Overview
 
@@ -19,15 +19,19 @@ Dagster introduces "Components", a new approach to developing and managing data 
 ## Key Benefits
 
 ### 1. Accelerated Onboarding & Productivity
+
 Components enable data teams to rapidly create, configure, and scale data workflows without being bogged down by complex code or tedious setup tasks.
 
 ### 2. Unified CLI Experience
+
 Provides a consistent command-line interface for managing components and pipelines.
 
 ### 3. Low-Code Convenience with High-Code Power
+
 Combines the ease of configuration-based development with the flexibility of full programmatic control when needed.
 
 ### 4. AI-Ready Design
+
 Built with AI-assisted development workflows in mind.
 
 ## Main Article Content
@@ -67,6 +71,7 @@ The article emphasizes that Components are currently in **preview status**, and 
 ## Implementation Approach
 
 The Components feature focuses on:
+
 1. Reducing complexity in pipeline setup
 2. Providing standardized patterns for common use cases
 3. Enabling rapid prototyping and development

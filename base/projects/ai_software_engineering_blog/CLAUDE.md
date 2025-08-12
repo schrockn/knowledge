@@ -33,6 +33,7 @@ This keeps ideas organized while maintaining the global low-friction capture mec
 ### Shower Thoughts Automation
 
 Send an email to the repo's GitHub Issues email address. Any email will automatically:
+
 1. Create a new file in `base/shower-thoughts/` with date suffix
 2. Use first 50 characters of the thought for the filename
 3. Close the issue with confirmation
@@ -44,12 +45,13 @@ Email format: Just send your thought - no formatting needed. The system handles 
 This blog series draws concrete examples from real AI-assisted software engineering work in these repos:
 
 - **dagster-io/dagster** - Main Dagster codebase, core framework development
-- **dagster-io/internal** - Internal tools and infrastructure  
+- **dagster-io/internal** - Internal tools and infrastructure
 - **dagster-io/dagster-compass** - Product and feature development
 
 ### Search Strategy (Hybrid Approach)
 
 **Quick Discovery (GitHub CLI):**
+
 ```bash
 # Search across all repos for patterns
 gh search code --owner dagster-io "decorator" --repo dagster --repo internal --repo dagster-compass
@@ -57,11 +59,13 @@ gh search code --owner dagster-io "refactor" --language python
 ```
 
 **Deep Analysis (Local Clones):**
+
 - Clone repos locally when doing detailed code analysis
 - Use local Grep/Glob tools for fast, precise searches
 - Better for understanding context and following code patterns
 
 **When to use each:**
+
 - GitHub CLI: Initial discovery, finding examples across repos, searching commit messages
 - Local clones: Detailed analysis, understanding full context, following refactoring patterns
 
