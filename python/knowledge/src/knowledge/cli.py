@@ -5,6 +5,8 @@ from pathlib import Path
 import os
 import subprocess
 import sys
+import re
+from datetime import datetime
 
 
 @click.group()
@@ -61,6 +63,53 @@ def project(name):
         claude_md.write_text(f"# {name.title()} Project\n\n")
     
     click.echo(f"Created project directory: {project_dir}")
+
+
+@main.command()
+@click.argument('thought')
+def shower_thought(thought):
+    """Add a shower thought to the repository."""
+    repo_root = find_repo_root()
+    
+    # Parse title and body from input (same logic as GitHub action)
+    if ':' in thought:
+        title_part, body_part = thought.split(':', 1)
+        title_part = title_part.strip()
+        body_part = body_part.strip()
+    else:
+        title_part = thought.strip()
+        body_part = ''
+    
+    # Sanitize title for filename (same logic as GitHub action)
+    sanitized_title = sanitize_title(title_part)
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    filename = f"{sanitized_title}-{current_date}.md"
+    
+    # Ensure shower-thoughts directory exists
+    shower_thoughts_dir = repo_root / "base" / "shower-thoughts"
+    shower_thoughts_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Create file path
+    filepath = shower_thoughts_dir / filename
+    
+    # Check if file already exists, add counter if needed
+    counter = 1
+    original_filepath = filepath
+    while filepath.exists():
+        stem = original_filepath.stem
+        suffix = original_filepath.suffix
+        filepath = original_filepath.parent / f"{stem}-{counter}{suffix}"
+        counter += 1
+    
+    # Write the content (use body if available, otherwise title)
+    content = body_part if body_part else title_part
+    
+    filepath.write_text(content)
+    
+    click.echo(f"Created shower thought: {filepath}")
+    click.echo(f'Title: "{title_part}"')
+    if body_part:
+        click.echo(f'Body: "{body_part}"')
 
 
 @main.command()
@@ -133,6 +182,26 @@ def lint(check, write):
     except subprocess.SubprocessError as e:
         click.echo(f"Error running pnpm dlx prettier: {e}")
         sys.exit(1)
+
+
+def sanitize_title(title):
+    """Convert title to a filename-safe format (same logic as GitHub action)."""
+    # Remove all [shower-thought] tags (there might be multiple)
+    title = re.sub(r'\[shower-thought\]\s*', '', title, flags=re.IGNORECASE)
+    title = title.strip()
+    
+    # Convert to lowercase and replace spaces/special chars with dashes
+    title = re.sub(r'[^\w\s-]', '', title.lower())
+    title = re.sub(r'[-\s]+', '-', title)
+    
+    # Remove leading/trailing dashes
+    title = title.strip('-')
+    
+    # Limit length to keep filename reasonable
+    if len(title) > 50:
+        title = title[:50].rstrip('-')
+    
+    return title
 
 
 def find_repo_root():

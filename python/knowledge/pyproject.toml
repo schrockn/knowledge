@@ -33,7 +33,6 @@ dev = [
     "pytest>=6.0",
     "pytest-cov",
     "ruff>=0.1.0",
-    "mypy",
     "pyright",
 ]
 
@@ -74,3 +73,9 @@ pythonVersion = "3.13"
 typeCheckingMode = "basic"
 reportMissingImports = true
 reportMissingTypeStubs = false
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.403",
+    "ruff>=0.12.8",
+]

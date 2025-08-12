@@ -74,7 +74,10 @@ A Python CLI tool located at `python/knowledge/` provides commands for managing 
 - `knowledge todo` - Manage daily todos
 - `knowledge task <name>` - Create new task files
 - `knowledge project <name>` - Create new project directories
+- `knowledge shower-thought "<thought>"` - Add a shower thought directly to the repository
 - `knowledge lint` - Format all markdown files using prettier
+
+**Setup**: Run `uv sync` from the repository root to install dependencies, then use `.venv/bin/knowledge` to run commands.
 
 ## Shower Thoughts Processing
 
