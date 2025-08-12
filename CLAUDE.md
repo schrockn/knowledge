@@ -43,6 +43,27 @@ The `base/notes/` directory contains point-in-time, dated documents that capture
 
 Notes differ from tasks in that they document completed research or thinking rather than ongoing work items.
 
+## Daily Task Management
+
+The `DAILY_TODO.md` file tracks daily tasks with date-based sections. Each day gets its own section with the date as a header (e.g., `## 2025-08-12`). 
+
+Guidelines for daily todos:
+1. **Simple format**: Use unchecked bullet points (`- [ ]`) for new tasks
+2. **Date-based**: Each day gets its own section with date header
+3. **No history tracking**: Focus only on current/recent days, don't maintain extensive history
+4. **Organic growth**: Add tasks as they come up throughout the day
+
+### Processing Previous Day TODOs
+
+When starting a new session, Claude should:
+1. Check `DAILY_TODO.md` for any unchecked tasks from previous days
+2. For each unchecked TODO from previous days, prompt the user with options:
+   - **Complete** - Mark as done `[x]`
+   - **Move to today** - Move the task to today's section
+   - **Delete** - Remove the task entirely
+   - **Keep** - Leave unchanged in previous day's section
+3. Process each TODO individually, waiting for user response before proceeding to the next
+
 ## Shower Thoughts Processing
 
 When processing shower thoughts:
