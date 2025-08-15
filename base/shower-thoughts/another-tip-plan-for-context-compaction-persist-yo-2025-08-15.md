@@ -1,0 +1,1 @@
+another tip -- plan for context compaction. persist your context [sms]
